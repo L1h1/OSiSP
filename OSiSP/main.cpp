@@ -74,7 +74,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     case WM_CREATE:
         //GetClientRect(hwnd, &func::rt);
         //func::PrepData();
-        
+        srand(time(0));
         GetClientRect(hwnd, &diag::rt);
         diag::PrepData();
 
