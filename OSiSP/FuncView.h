@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
+#include <format>
 #include <windows.h>
+#include <algorithm>
 #include "Drawer.h"
 using namespace std;
 

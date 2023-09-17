@@ -3,12 +3,9 @@ name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 #include <windows.h>
-#include <utility>
-#include <string>
-#include <vector>
-#include <format>
-#include <algorithm>
+
 #include "FuncView.h"
+#include "DiagView.h"
 #include "Drawer.h"
 using namespace std;
 
@@ -75,9 +72,11 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
     switch (uMsg)
     {
     case WM_CREATE:
-        GetClientRect(hwnd, &func::rt);
-
-        func::PrepData();
+        //GetClientRect(hwnd, &func::rt);
+        //func::PrepData();
+        
+        GetClientRect(hwnd, &diag::rt);
+        diag::PrepData();
 
         return 0;
 
@@ -87,7 +86,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
     case WM_PAINT:
     {        
-        func::Paint(hwnd);
+        //func::Paint(hwnd);
+        diag::Paint(hwnd);
     }
     return 0;
 

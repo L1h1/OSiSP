@@ -25,3 +25,14 @@ BOOL DrawDot(HDC hdc, int x, int y, COLORREF color, int width) {
 
     return result;
 }
+
+BOOL DrawCircle(HDC hdc, int x, int y, int radius, COLORREF color, int width) {
+    HPEN newPen = CreatePen(PS_SOLID, width, color);
+    HGDIOBJ oldPen = SelectObject(hdc, newPen);
+    
+    BOOL result = Ellipse(hdc, x - radius, y - radius, x + radius, y + radius);
+    SelectObject(hdc, oldPen);
+    DeleteObject(newPen);
+
+    return result;
+}
