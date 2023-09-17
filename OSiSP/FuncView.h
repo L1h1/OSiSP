@@ -14,6 +14,7 @@ namespace func {
     int moveConst = 400;
 
     //Для Графиков (x,y) точки
+    //Шаблонные данные в случае ошибки чтения пользовательских
     vector<pair<int, int>> funcAnalysisData = { {4,-6}, {1,1},{5,2},{10,4} };
     int dataCount;
 

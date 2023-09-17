@@ -12,6 +12,7 @@ namespace diag {
 	int circleCenterX, circleCenterY,circleRadius=150;
 
 	//Для диаграмм - метка + значение
+	//Шаблонные данные в случае ошибки чтения пользовательских
 	vector<pair<string, int>> diagramAnalysisData = { {"First",1},{"Second",8},{"Third",3},{"Fourth",5},{"Fifth",2},{"Sixth",7} };
 	int dataCount;
 	int sum=0;
@@ -94,19 +95,18 @@ namespace diag {
 		//скелет диаграммы + легенда
 		//DrawCircle(hdc, circleCenterX, circleCenterY, circleRadius, RGB(0, 0, 0), 4);
 		DrawSector(hdc, circleCenterX, circleCenterY, circleRadius,
-			calculatedCoords[0].first, calculatedCoords[0].second, calculatedCoords[dataCount-1].first, calculatedCoords[dataCount-1].second, colors[dataCount-1], 4);
+			calculatedCoords[0].first, calculatedCoords[0].second, calculatedCoords[dataCount-1].first, calculatedCoords[dataCount-1].second, colors[0], 2);
 
 		for (int i = 0; i < dataCount; i++) {
 
 			if (i > 0) {
 				DrawSector(hdc, circleCenterX, circleCenterY, circleRadius,
-					calculatedCoords[i].first, calculatedCoords[i].second, calculatedCoords[i - 1].first, calculatedCoords[i - 1].second, colors[i], 4);
+					calculatedCoords[i].first, calculatedCoords[i].second, calculatedCoords[i - 1].first, calculatedCoords[i - 1].second, colors[i], 2);
 			}
 			
 			HBRUSH newBrush = CreateSolidBrush(colors[i]);
 			HGDIOBJ oldBrush = SelectObject(hdc, newBrush);
 			Rectangle(hdc, circleCenterX + circleRadius + 150, (rt.top + 50) + (i + 1) * 50, circleCenterX + circleRadius + 170, (rt.top + 50) + (i + 1) * 50 + 20);
-			//DrawLine(hdc, circleCenterX, circleCenterY, calculatedCoords[i].first, calculatedCoords[i].second, RGB(0, 0, 0), 4);
 			tempstr = diagramAnalysisData[i].first+format(" - {}%",1.0 * diagramAnalysisData[i].second / sum * 100);
 			temp = wstring(tempstr.begin(), tempstr.end());
 			TextOut(hdc, circleCenterX + circleRadius + 175, (rt.top + 50) + (i + 1) * 50, temp.c_str(), temp.length());

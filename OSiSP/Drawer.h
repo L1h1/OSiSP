@@ -29,7 +29,7 @@ BOOL DrawDot(HDC hdc, int x, int y, COLORREF color, int width) {
 //x,y- центр окружности x1,y1 - начальная точка дуги, x2,y2-конечная
 BOOL DrawSector(HDC hdc, int x, int y, int radius, int x1, int y1, int x2, int y2, COLORREF color, int width) {
     
-    HPEN newPen = CreatePen(PS_SOLID, width, color);
+    HPEN newPen = CreatePen(PS_SOLID, width, RGB(0,0,0));
     HGDIOBJ oldPen = SelectObject(hdc, newPen);
 
     HBRUSH newBrush = CreateSolidBrush(color);
