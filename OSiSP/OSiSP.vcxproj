@@ -133,7 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DiagView.h" />
-    <ClInclude Include="Drawer.h" />
+    <ClInclude Include="Utility.h" />
     <ClInclude Include="FuncView.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

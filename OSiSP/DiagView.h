@@ -2,7 +2,10 @@
 #define _USE_MATH_DEFINES
 #include<windows.h>
 #include <vector>
-#include <string>
+#include <fstream>
+#include<string>
+#include <utility>
+#include <iostream>
 #include <format>
 #include <math.h>
 using namespace std;
@@ -23,6 +26,45 @@ namespace diag {
 	vector<COLORREF> colors;
 
 
+
+	void ReadDataFromFile() {
+
+		fstream new_file;
+		new_file.open(filename, ios::in);
+
+		vector<pair<string, int>> temp;
+		string input;
+		bool isMark = true;
+		int tvalue;
+		string tmark;
+		try {
+			while (getline(new_file, input)) {
+				if (isMark) {
+					isMark = false;
+					tmark = input;
+				}
+				else {
+					isMark = true;
+					tvalue = stoi(input);
+					temp.push_back(make_pair(tmark, tvalue));
+				}
+			}
+		}
+		catch (exception ex) {
+
+		}
+		
+
+		if(temp.size()>1)
+		diagramAnalysisData = temp;
+
+		new_file.close();
+	}
+
+
+
+
+	//углы поворота
 	void CalcCoefs() {
 
 		for (int i = 0; i < dataCount; i++) {
@@ -56,6 +98,7 @@ namespace diag {
 
 		}
 	}
+	
 	void RandColors() {
 		for (int i = 0; i < dataCount; i++) {
 			colors.push_back(RandomizeColor());
@@ -63,6 +106,8 @@ namespace diag {
 	}
 
 	void PrepData() {
+		ReadDataFromFile();
+		srand(time(0));
 		circleCenterX = rt.right / 2-150;
 		circleCenterY = rt.bottom / 2-150;
 		dataCount = diagramAnalysisData.size();
@@ -104,6 +149,7 @@ namespace diag {
 					calculatedCoords[i].first, calculatedCoords[i].second, calculatedCoords[i - 1].first, calculatedCoords[i - 1].second, colors[i], 2);
 			}
 			
+			//собственно легенда
 			HBRUSH newBrush = CreateSolidBrush(colors[i]);
 			HGDIOBJ oldBrush = SelectObject(hdc, newBrush);
 			Rectangle(hdc, circleCenterX + circleRadius + 150, (rt.top + 50) + (i + 1) * 50, circleCenterX + circleRadius + 170, (rt.top + 50) + (i + 1) * 50 + 20);

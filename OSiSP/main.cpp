@@ -3,12 +3,14 @@ name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 #include <windows.h>
-
 #include "FuncView.h"
 #include "DiagView.h"
-#include "Drawer.h"
+#include "Utility.h"
 #include "resource.h"
+
 using namespace std;
+
+
 
 
 int screenWidth = 800, screenHeight = 800;
@@ -86,7 +88,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         }
         
         
-        srand(time(0));
+
 
 
         return 0;
@@ -112,12 +114,17 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 
 
+
+
 BOOL CALLBACK DlgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     switch (msg) {
     case WM_INITDIALOG:
         break;
     case WM_COMMAND:
         ID = LOWORD(wParam);
+        
+        OpenFile(hwnd);
+        
         EndDialog(hwnd, 0);
         break;
     case WM_CLOSE:

@@ -26,7 +26,7 @@
     <ClInclude Include="DiagView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Drawer.h">
+    <ClInclude Include="Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">

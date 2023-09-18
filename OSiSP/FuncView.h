@@ -3,7 +3,11 @@
 #include <format>
 #include <windows.h>
 #include <algorithm>
-#include "Drawer.h"
+#include <fstream>
+#include<string>
+#include <utility>
+#include <iostream>
+#include "Utility.h"
 using namespace std;
 
 namespace func {
@@ -45,7 +49,7 @@ namespace func {
                 }
             }
             if (min_val != INT_MAX) {
-                maxDataValueY = abs(min_val) > max_val ? abs(min_val) * 2 : max_val * 2;
+                maxDataValueY = abs(min_val) > max_val ? abs(min_val) * 2+1 : max_val * 2+1;
             }
             else {
                 maxDataValueY = max_val;
@@ -71,8 +75,43 @@ namespace func {
         }
     }
 
+    void ReadDataFromFile() {
+
+
+        fstream new_file;
+        new_file.open(filename, ios::in);
+
+        vector<pair<int, int>> temp;
+        string input;
+        bool isMark = true;
+        int tval1, tval2;
+        try {
+            while (getline(new_file, input)) {
+                if (isMark) {
+                    isMark = false;
+                    tval1 = stoi(input);
+                }
+                else {
+                    isMark = true;
+                    tval2 = stoi(input);
+                    temp.push_back(make_pair(tval1, tval2));
+                }
+            }
+        }
+        catch (exception ex) {
+
+        }
+
+        if (temp.size() > 1)
+        funcAnalysisData = temp;
+
+        new_file.close();
+    }
+
+
     //Сортировка, поиск предельных значений, цены деления и координат в пределах окна соответственно
     void PrepData() {
+        ReadDataFromFile();
         dataCount = funcAnalysisData.size();
         sort(funcAnalysisData.begin(), funcAnalysisData.end(), [](auto& left, auto& right) {
             return left.first < right.first;

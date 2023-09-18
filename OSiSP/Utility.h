@@ -1,5 +1,11 @@
 #pragma once
 #include <windows.h>
+
+
+using namespace std;
+OPENFILENAME ofn;
+wstring filename;
+
 BOOL DrawLine(HDC hdc, int xFrom, int yFrom, int xTo, int yTo, COLORREF color, int width) {
     MoveToEx(hdc, xFrom, yFrom, NULL); //сделать текущими координаты xFrom, yFrom
 
@@ -54,4 +60,27 @@ BOOL DrawSector(HDC hdc, int x, int y, int radius, int x1, int y1, int x2, int y
 
 COLORREF RandomizeColor() {
     return RGB((BYTE)rand() % 255, (BYTE)rand() % 255, (BYTE)rand() % 255);
+}
+
+
+bool OpenFile(HWND hwnd) {
+
+    const std::wstring title = L"Select a File";
+    std::wstring src(MAX_PATH, L'\0');
+
+    OPENFILENAMEW ofn = { };
+    ofn.lStructSize = sizeof(ofn);
+    ofn.hwndOwner = NULL;
+    ofn.lpstrFilter = TEXT("*.txt\0");
+    ofn.lpstrFile = &src[0];  // use the std::wstring buffer directly
+    ofn.nMaxFile = MAX_PATH;
+    ofn.lpstrTitle = title.c_str();
+    ofn.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST;
+
+    if (GetOpenFileNameW(&ofn))
+    {
+        filename = src;    //<----------Save filepath in global variable
+        return true;
+    }
+    return false;
 }
